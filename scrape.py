@@ -14,9 +14,9 @@ with webdriver.Chrome() as driver:
     result = driver.find_element_by_xpath('/html/body/div[4]/div/form/div[2]/div[1]/main/div/div[3]/div[3]/form/div[2]/div/div/span[1]').text
     if result == 'XS - Not available I want it!':
         print('OOS' + result)
-        requests.post(url='https://hooks.slack.com/services/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',data='{"text":"Out of stock!"}')
+        requests.post(url='https://hooks.slack.com/services/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',data='{"text":"Out of stock!"}')
     else:
-        requests.post(url='https://hooks.slack.com/services/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',data='{"text":"In stock!"}')
+        requests.post(url='https://hooks.slack.com/services/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',data='{"text":"In stock!"}')
 
     # https://shop.mango.com/gb/women/coats-quilted-coats/hood-quilted-coat_53048813.html?c=99&n=1&s=prendas_she.familia;15
     

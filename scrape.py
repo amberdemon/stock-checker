@@ -5,19 +5,22 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.expected_conditions import presence_of_element_located
+from selenium.common.exceptions import NoSuchElementException
+
 
 #This example requires Selenium WebDriver 3.13 or newer
 with webdriver.Chrome() as driver:
     wait = WebDriverWait(driver, 10)
-    url = "https://shop.mango.com/gb/women/coats-quilted-coats/hood-quilted-coat_53048813.html?c=99&n=1&s=prendas_she.familia;15"
+    # url = "https://www.katespade.co.uk/en-gb/wallets/spencer-compact-wallet/PWRU7748.html?dwcolor=001&dwsize=412_U"
+    url = "https://www.katespade.co.uk/en-gb/wallets/spencer-zip-around-continental-wallet/PWRU7750.html?dwcolor=001#q=spencer&start=1"
     driver.get(url)
-    driver.find_element_by_xpath("//form/div[2]/div/span").click()
-    result = driver.find_element_by_xpath('/html/body/div[4]/div/form/div[2]/div[1]/main/div/div[3]/div[3]/form/div[2]/div/div/span[1]').text
-    if result == 'XS - Not available I want it!':
-        print(url +' OOS ' + result)
-        # requests.post(url='https://hooks.slack.com/services/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',data='{"text":"Out of stock!"}')
-    else:
-        requests.post(url='https://hooks.slack.com/services/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',data='{"text":"In stock! gotto https://shop.mango.com/gb/women/coats-quilted-coats/hood-quilted-coat_53048813.html?c=99&n=1&s=prendas_she.familia;15"}')
-
-    # https://shop.mango.com/gb/women/coats-quilted-coats/hood-quilted-coat_53048813.html?c=99&n=1&s=prendas_she.familia;15
     
+    try:
+        element=driver.find_element_by_xpath('//*[@id="Quantity"]/option').text
+        if element == '1':
+          print("IN STOCK got to "+url)
+          requests.post(url='',data='{"text":"In stock! gotto kate spade"}')
+        else:
+          print(element)
+    except NoSuchElementException:
+        print("No element found")
